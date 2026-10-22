@@ -28,3 +28,31 @@ it('closes without consuming Tab when the overlay ref is omitted', () => {
     trigger.remove();
   }
 });
+
+it('closes and returns focus to trigger on Escape key', () => {
+  const trigger = document.createElement('button');
+  document.body.appendChild(trigger);
+  const onOpenChange = jest.fn();
+  const { unmount } = renderHook(() =>
+    useAccessibility({
+      open: true,
+      triggerRef: { current: trigger },
+      onOpenChange,
+    }),
+  );
+  try {
+    const event = new KeyboardEvent('keydown', {
+      keyCode: 27,
+      bubbles: true,
+      cancelable: true,
+    });
+    act(() => {
+      window.dispatchEvent(event);
+    });
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(document.activeElement).toBe(trigger);
+  } finally {
+    unmount();
+    trigger.remove();
+  }
+});

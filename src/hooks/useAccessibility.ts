@@ -75,13 +75,13 @@ export default function useAccessibility({
 
   React.useEffect(() => {
     if (open) {
-      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('keydown', handleKeyDown, true);
       if (autoFocus) {
         // FIXME: hack with raf
         raf(() => focusMenu({ preventScroll: true }), 3);
       }
       return () => {
-        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('keydown', handleKeyDown, true);
         focusMenuRef.current = false;
       };
     }

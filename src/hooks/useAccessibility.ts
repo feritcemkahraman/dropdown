@@ -76,10 +76,14 @@ export default function useAccessibility({
   React.useEffect(() => {
     if (open) {
       const handleCapture = (event: KeyboardEvent) => {
-        if (event.keyCode === ESC) handleKeyDown(event);
+        if (event.keyCode === ESC) {
+          handleKeyDown(event);
+        }
       };
       const handleBubble = (event: KeyboardEvent) => {
-        if (event.keyCode !== ESC) handleKeyDown(event);
+        if (event.keyCode !== ESC) {
+          handleKeyDown(event);
+        }
       };
       window.addEventListener('keydown', handleCapture, true);
       window.addEventListener('keydown', handleBubble);
